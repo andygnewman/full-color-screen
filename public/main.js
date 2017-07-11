@@ -5,18 +5,16 @@ const inputHexCode = document.querySelector('.input__hex-code');
 const inputColorSearch = document.querySelector('.input__color-search');
 const overlay = document.querySelector('.overlay');
 const errorPlaceholder = document.querySelector('.error');
-const colorSearchLinks = document.querySelectorAll('.link__color-search');
+const colorSearchIframe = document.querySelector('.color-search__iframe');
 const hexRegex = /^#[0-9A-F]{6}$/i;
 
-const resetHexCode = () => {
-  inputHexCode.value = '';
+const resetHexCodeError = () => {
   errorPlaceholder.textContent = '';
 };
 
 const checkHexCodeForError = (inputHexCodeValue) => {
-  let errorMessage;
   if (!hexRegex.test(inputHexCodeValue)) {
-    errorMessage = 'HEX code needs to be 6 characters, 0 to 9, or A to F';
+    const errorMessage = 'HEX code needs to be # followed by 6 characters, 0 to 9, or A to F';
     errorPlaceholder.textContent = errorMessage;
     return false;
   };
@@ -24,8 +22,7 @@ const checkHexCodeForError = (inputHexCodeValue) => {
 };
 
 const initiateOverlay = () => {
-  let inputHexCodeValue = '#' + inputHexCode.value;
-  inputHexCodeValue = checkHexCodeForError(inputHexCodeValue);
+  const inputHexCodeValue = checkHexCodeForError(inputHexCode.value);
   if (!inputHexCodeValue) {
     return;
   }
@@ -40,7 +37,8 @@ const closeOverlay = () => {
 const initiateColorSearch = () => {
   const searchValue = inputColorSearch.value.split(' ').join('+');
   const searchLink = document.querySelector('input[name=colorSearchLink]:checked').value + searchValue;
-  window.open(searchLink, '__blank');
+  colorSearchIframe.src = searchLink;
+  // window.open(searchLink, '_blank');
 };
 
 document.onkeydown = (evt) => {
@@ -48,15 +46,10 @@ document.onkeydown = (evt) => {
   if (evt.keyCode === 27) {
     closeOverlay();
   }
-  if (evt.keyCode === 13) {
-    initiateOverlay();
-  }
 };
 
-inputHexCode.addEventListener("click", resetHexCode);
+inputHexCode.addEventListener("click", resetHexCodeError);
 
 buttonInitiate.onclick = initiateOverlay;
-
 buttonClose.onclick = closeOverlay;
-
 buttonColorSearch.onclick = initiateColorSearch;
