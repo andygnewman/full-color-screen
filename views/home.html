@@ -5,60 +5,70 @@
   </head>
   <body>
     <h1 class="title">Full Screen Paint Sample (BETA)</h1>
-    <fieldset class="fieldset__hex">
-      <label class="label">Enter the HEX code:</label>
-      <textarea
-        class="input__hex-code"
-        autocapitalize="characters"
-        autocomplete="on"
-        autofocs
-        cols="12"
-        maxlength="7"
-        minlength="7"
-        placeholder="e.g. #FFFFFF"
-        required
-        rows="1"
-      ></textarea>
-      <button class="button__initiate">Full Screen Paint Sample</button>
-    </fieldset>
-    <p class="error"></p>
+    <div class="css-grid__container">
+      <div class="hex">
+        <h2 class="text__standard">Use your screen as a paint sample</h2>
+        <fieldset class="fieldset__hex">
+          <label class="label">Enter the paint's HEX code:</label>
+          <textarea
+            class="input__hex-code"
+            autocapitalize="characters"
+            autocomplete="on"
+            autofocs
+            cols="12"
+            maxlength="7"
+            minlength="7"
+            placeholder="e.g. #FFFFFF"
+            required
+            rows="1"
+          ></textarea>
+          <button class="button__initiate">Full Screen Paint Sample</button>
+        </fieldset>
+        <p class="error"></p>
+      </div>
+      <div class="color">
+        <h2>Find the HEX code for your paint</h2>
+        <fieldset class="fieldset__color-search">
+          <label class="label">Enter the name of your paint</label>
+          <textarea
+          class="input__color-search"
+          autocapitalize="characters"
+          autocomplete="on"
+          autofocs
+          cols="30"
+          minlength="5"
+          placeholder="e.g. Inchyra Blue"
+          required
+          rows="1"
+          ></textarea>
+          <button class="button__color-search">Launch Color Search</button>
+          <div>
+            <p>Preferred Search Site</p>
+            <div>
+              <input type="radio" id="colorSearchLink1" name="colorSearchLink" value="http://www.e-paint.co.uk/search_colour.asp?cQuery=" checked="checked">
+              <label for="colorSearchLink1">
+                <a class="link__color-search" href="http://www.e-paint.co.uk/search_colour.asp?cQuery=" target="__blank">e-paint.co.uk</a>
+              </label>
+              <p>Click "View L*a*b*/HLC values" link against colour result to get the HEX code</p>
+            </div>
+            <div>
+              <input type="radio" id="colorSearchLink2" name="colorSearchLink" value="http://encycolorpedia.com/search?q=">
+              <label for="colorSearchLink2">
+                <a class="link__color-search" href="http://encycolorpedia.com/search?q=" target="__blank">encycolorpedia.com</a>
+              </label>
+              <p>Click the link for colour result, the HEX code will be in the page title</p>
+            </div>
+          </div>
+        </fieldset>
+        <iframe class="color-search__iframe" src=""></iframe>
+      </div>
+      <div class="tips">
+        <h2>Tips for paint samples</h2>
+      </div>
+    </div>
     <div class="overlay">
       <button class="button__close">Close</button>
     </div>
-    <h2>Find the HEX code for your paint</h2>
-      <fieldset class="fieldset__color-search">
-        <label class="label">Enter the name of your paint</label>
-        <textarea
-        class="input__color-search"
-        autocapitalize="characters"
-        autocomplete="on"
-        autofocs
-        cols="30"
-        minlength="5"
-        placeholder="e.g. Inchyra Blue"
-        required
-        rows="1"
-        ></textarea>
-        <button class="button__color-search">Launch Color Search</button>
-        <div>
-          <p>Preferred Search Site</p>
-          <div>
-            <input type="radio" id="colorSearchLink1" name="colorSearchLink" value="http://www.e-paint.co.uk/search_colour.asp?cQuery=" checked="checked">
-            <label for="colorSearchLink1">
-              <a class="link__color-search" href="http://www.e-paint.co.uk/search_colour.asp?cQuery=" target="__blank">e-paint.co.uk</a>
-            </label>
-            <p>Click "View L*a*b*/HLC values" link against colour result to get the HEX code</p>
-          </div>
-          <div>
-            <input type="radio" id="colorSearchLink2" name="colorSearchLink" value="http://encycolorpedia.com/search?q=">
-            <label for="colorSearchLink2">
-              <a class="link__color-search" href="http://encycolorpedia.com/search?q=" target="__blank">encycolorpedia.com</a>
-            </label>
-            <p>Click the link for colour result, the HEX code will be in the page title</p>
-          </div>
-        </div>
-      </fieldset>
-      <iframe class="color-search__iframe" width="100%" height="250px" src=""></iframe>
   </body>
   <script src="/main.js"></script>
 </html>
