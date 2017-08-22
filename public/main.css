@@ -58,6 +58,7 @@ label, textarea, button {
   display: none; }
 
 .color-search__iframe {
+  display: none;
   width: 100%;
   height: 700px; }
 

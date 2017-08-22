@@ -5,6 +5,7 @@ const inputHexCode = document.querySelector('.input__hex-code');
 const inputColorSearch = document.querySelector('.input__color-search');
 const overlay = document.querySelector('.overlay');
 const errorPlaceholder = document.querySelector('.error');
+const colorSearchPlaceholder = document.querySelector('.color-search__placeholder');
 const colorSearchIframe = document.querySelector('.color-search__iframe');
 const hexRegex = /^#[0-9A-F]{6}$/i;
 
@@ -38,7 +39,8 @@ const initiateColorSearch = () => {
   const searchValue = inputColorSearch.value.split(' ').join('+');
   const searchLink = document.querySelector('input[name=colorSearchLink]:checked').value + searchValue;
   colorSearchIframe.src = searchLink;
-  // window.open(searchLink, '_blank');
+  colorSearchPlaceholder.style.display = 'none';
+  colorSearchIframe.style.display = 'block';
 };
 
 document.onkeydown = (evt) => {
