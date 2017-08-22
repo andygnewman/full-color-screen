@@ -1,33 +1,41 @@
 body {
   font-family: palatino; }
 
+button {
+  border: none;
+  border-radius: 8px;
+  background-color: #2E8B57;
+  color: #FFFFFF;
+  cursor: pointer; }
+
 .css-grid__container {
   width: 100%;
   display: grid;
-  grid-template-columns: 12fr;
-  grid-template-rows: auto; }
-
-@media (min-width: 768px) {
-  .css-grid__container {
-    grid-template-columns: 6fr 6fr; }
-  .color {
-    grid-column: 2;
-    grid-row: 1; }
-  .tips {
-    grid-column: 1;
-    grid-row: 2; } }
+  grid-template-rows: auto;
+  grid-template-columns: 6fr 6fr; }
+  @media (max-width: 768px) {
+    .css-grid__container {
+      grid-template-columns: 12fr; } }
 
 .hex {
   grid-column: 1;
   grid-row: 1; }
 
 .color {
-  grid-column: 1;
-  grid-row: 2; }
+  grid-column: 2;
+  grid-row: 1/span 3; }
+  @media (max-width: 768px) {
+    .color {
+      grid-column: 1;
+      grid-row: 2; } }
 
 .tips {
   grid-column: 1;
-  grid-row: 3; }
+  grid-row: 2; }
+  @media (max-width: 768px) {
+    .tips {
+      grid-column: 1;
+      grid-row: 3; } }
 
 .label {
   font-size: 1em; }
@@ -39,13 +47,6 @@ label, textarea, button {
   display: inline-block;
   vertical-align: middle;
   font-size: 1em; }
-
-.button__initiate {
-  border: none;
-  border-radius: 8px;
-  background-color: #2E8B57;
-  color: #FFFFFF;
-  cursor: pointer; }
 
 .overlay {
   position: absolute;
@@ -59,3 +60,10 @@ label, textarea, button {
 .color-search__iframe {
   width: 100%;
   height: 700px; }
+
+.button__close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #000000;
+  border: 1px white solid; }

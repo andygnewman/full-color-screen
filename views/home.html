@@ -10,19 +10,21 @@
         <h2 class="text__standard">Use your screen as a paint sample</h2>
         <fieldset class="fieldset__hex">
           <label class="label">Enter the paint's HEX code:</label>
+          <div>
           <textarea
             class="input__hex-code"
             autocapitalize="characters"
             autocomplete="on"
-            autofocs
-            cols="12"
+            autofocus
+            cols="14"
             maxlength="7"
             minlength="7"
             placeholder="e.g. #FFFFFF"
             required
             rows="1"
           ></textarea>
-          <button class="button__initiate">Full Screen Paint Sample</button>
+          <button class="button__initiate">Full Screen Sample</button>
+        </div>
         </fieldset>
         <p class="error"></p>
       </div>
@@ -30,18 +32,18 @@
         <h2>Find the HEX code for your paint</h2>
         <fieldset class="fieldset__color-search">
           <label class="label">Enter the name of your paint</label>
-          <textarea
-          class="input__color-search"
-          autocapitalize="characters"
-          autocomplete="on"
-          autofocs
-          cols="30"
-          minlength="5"
-          placeholder="e.g. Inchyra Blue"
-          required
-          rows="1"
-          ></textarea>
-          <button class="button__color-search">Launch Color Search</button>
+          <div>
+            <textarea
+            class="input__color-search"
+            autocapitalize="characters"
+            autocomplete="on"
+            cols="25"
+            minlength="5"
+            placeholder="e.g. Inchyra Blue"
+            rows="1"
+            ></textarea>
+            <button class="button__color-search">Colour Search</button>
+          </div>
           <div>
             <p>Preferred Search Site</p>
             <div>
@@ -59,15 +61,15 @@
               <p>Click the link for colour result, the HEX code will be in the page title</p>
             </div>
           </div>
+          <iframe class="color-search__iframe" src=""></iframe>
         </fieldset>
-        <iframe class="color-search__iframe" src=""></iframe>
       </div>
       <div class="tips">
         <h2>Tips for paint samples</h2>
       </div>
     </div>
     <div class="overlay">
-      <button class="button__close">Close</button>
+      <button class="button__close">X</button>
     </div>
   </body>
   <script src="/main.js"></script>
