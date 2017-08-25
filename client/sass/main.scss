@@ -21,6 +21,13 @@ button {
   }
 }
 
+.hex,
+.color,
+.tips,
+.footer {
+  margin: 10px;
+}
+
 .hex {
   grid-column: 1;
   grid-row: 1;
@@ -55,9 +62,11 @@ button {
 .footer {
   grid-column: 1/span 2;
   grid-row: 4;
+  text-align: center;
   li {
     display: inline-block;
     text-decoration: none;
+    padding: 0 10px;
   }
 }
 
