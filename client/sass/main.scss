@@ -1,5 +1,5 @@
 body {
-  font-family: palatino;
+  font-family: helvetica;
 }
 
 button {
@@ -40,9 +40,24 @@ button {
   grid-column: 1;
   grid-row: 2;
 
+  li {
+    font-size: 0.9em;
+    line-height: 1em;
+    padding-bottom: 0.3em;
+  }
+
   @media (max-width: 768px) {
     grid-column: 1;
     grid-row: 3;
+  }
+}
+
+.footer {
+  grid-column: 1/span 2;
+  grid-row: 4;
+  li {
+    display: inline-block;
+    text-decoration: none;
   }
 }
 
@@ -50,7 +65,8 @@ button {
   font-size: 1em;
 }
 
-.fieldset__hex {
+.fieldset__hex,
+.fieldset__color-search {
   border: 2px black solid;
 }
 
