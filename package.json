@@ -1,4 +1,14 @@
 {
+  "name": "full-color-screen",
+  "description": "Full screen paint sample",
+  "main": "app.js",
+  "author": "andygnewman",
+  "repository": "https://github.com/andygnewman/full-color-screen",
+  "license": "MIT",
+  "scripts": { "start" : "node app.js" },
+  "engines": {
+    "node": "6.11.2"
+  },
   "dependencies": {
     "express": "^4.15.3"
   },
