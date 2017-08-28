@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const sassMiddleware = require('node-sass-middleware');
+const port = process.env.PORT || 3000;
 
 app.use(
    sassMiddleware({
@@ -18,6 +19,4 @@ app.get('/', function (req, res) {
   });
 });
 
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!')
-});
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));
