@@ -5,11 +5,14 @@
   "author": "andygnewman",
   "repository": "https://github.com/andygnewman/full-color-screen",
   "license": "MIT",
-  "scripts": { "start" : "node app.js" },
+  "scripts": {
+    "start": "node app.js"
+  },
   "engines": {
     "node": "6.11.2"
   },
   "dependencies": {
+    "ejs": "^2.5.7",
     "express": "^4.15.3",
     "node-sass": "^4.5.3",
     "node-sass-middleware": "^0.11.0"
