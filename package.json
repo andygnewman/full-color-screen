@@ -17,7 +17,8 @@
     "ejs": "^2.5.7",
     "express": "^4.15.3",
     "node-sass": "^4.5.3",
-    "node-sass-middleware": "^0.11.0"
+    "node-sass-middleware": "^0.11.0",
+    "superstore": "^2.1.0"
   },
   "devDependencies": {
     "webpack": "^3.5.6"

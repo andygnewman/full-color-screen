@@ -1,13 +1,29 @@
+const Superstore = require('superstore');
+
+const localStore = new Superstore('local', 'fullScreenPaintSample');
+
 const buttonInitiate = document.querySelector('.button__initiate');
-const buttonClose = document.querySelector('.button__close');
+const buttonCloseOverlay = document.querySelector('.button__close--overlay');
+const buttonCloseCookies = document.querySelector('.button__close--cookies');
 const buttonColorSearch = document.querySelector('.button__color-search');
 const inputHexCode = document.querySelector('.input__hex-code');
 const inputColorSearch = document.querySelector('.input__color-search');
 const overlay = document.querySelector('.overlay');
+const cookieNotice = document.querySelector('.cookie-notice');
 const errorPlaceholder = document.querySelector('.error');
 const colorSearchPlaceholder = document.querySelector('.color-search__placeholder');
 const colorSearchIframe = document.querySelector('.color-search__iframe');
 const hexRegex = /^#[0-9A-F]{6}$/i;
+
+const checkCookieAcceptance = () => {
+  return localStore.get('cookieAcceptance')
+    .then(cookieAcceptance => cookieAcceptance);
+};
+
+const acceptCookieNotice = () => {
+  localStore.set('cookieAcceptance', true)
+    .then(() => cookieNotice.style.display = 'none');
+}
 
 const resetHexCodeError = () => {
   errorPlaceholder.textContent = '';
@@ -53,5 +69,14 @@ document.onkeydown = (evt) => {
 inputHexCode.addEventListener("click", resetHexCodeError);
 
 buttonInitiate.onclick = initiateOverlay;
-buttonClose.onclick = closeOverlay;
+buttonCloseOverlay.onclick = closeOverlay;
 buttonColorSearch.onclick = initiateColorSearch;
+buttonCloseCookies.onclick = acceptCookieNotice;
+
+checkCookieAcceptance()
+  .then(cookieAcceptance => {
+    if(!cookieAcceptance) {
+      console.log('No cookie Acceptance!');
+      cookieNotice.style.display = 'block';
+    }
+  })
