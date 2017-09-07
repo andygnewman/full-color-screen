@@ -55,3 +55,6 @@ inputHexCode.addEventListener("click", resetHexCodeError);
 buttonInitiate.onclick = initiateOverlay;
 buttonClose.onclick = closeOverlay;
 buttonColorSearch.onclick = initiateColorSearch;
+
+checkForCookieAcceptance()
+  .then(cookieAcceptance => console.log('Cookie Acceptance: ', cookieAcceptance));
