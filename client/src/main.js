@@ -66,16 +66,16 @@ document.onkeydown = (evt) => {
   }
 };
 
-inputHexCode.addEventListener("click", resetHexCodeError);
+inputHexCode && inputHexCode.addEventListener("click", resetHexCodeError);
 
-buttonInitiate.onclick = initiateOverlay;
-buttonCloseOverlay.onclick = closeOverlay;
-buttonColorSearch.onclick = initiateColorSearch;
-buttonCloseCookies.onclick = acceptCookieNotice;
+if (buttonInitiate) { buttonInitiate.onclick = initiateOverlay };
+if (buttonCloseOverlay) { buttonCloseOverlay.onclick = closeOverlay };
+if (buttonColorSearch) { buttonColorSearch.onclick = initiateColorSearch };
+if (buttonCloseCookies) { buttonCloseCookies.onclick = acceptCookieNotice };
 
 checkCookieAcceptance()
   .then(cookieAcceptance => {
-    if(!cookieAcceptance) {
+    if (!cookieAcceptance) {
       console.log('No cookie Acceptance!');
       cookieNotice.style.display = 'block';
     }

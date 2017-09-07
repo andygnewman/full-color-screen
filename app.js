@@ -16,7 +16,7 @@ app.use(
 app.use(express.static('public'));
 
 app.get('/cookies', function (req, res) {
-  res.sendFile('cookies', {
+  res.render('cookies', {
     root: __dirname + '/views/'
   });
 });
