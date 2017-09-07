@@ -6,6 +6,8 @@
   "repository": "https://github.com/andygnewman/full-color-screen",
   "license": "MIT",
   "scripts": {
+    "build": "webpack",
+    "postinstall": "webpack",
     "start": "node app.js"
   },
   "engines": {
