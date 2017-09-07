@@ -3,6 +3,8 @@ const app = express();
 const sassMiddleware = require('node-sass-middleware');
 const port = process.env.PORT || 3000;
 
+app.set('view engine', 'ejs');
+
 app.use(
    sassMiddleware({
        src: __dirname + '/client/sass',
@@ -14,7 +16,7 @@ app.use(
 app.use(express.static('public'));
 
 app.get('/', function (req, res) {
-  res.sendFile('home.html', {
+  res.render('home', {
     root: __dirname + '/views/'
   });
 });
