@@ -15,6 +15,12 @@ app.use(
 
 app.use(express.static('public'));
 
+app.get('/cookies', function (req, res) {
+  res.render('cookies', {
+    root: __dirname + '/views/'
+  });
+});
+
 app.get('/', function (req, res) {
   res.render('home', {
     root: __dirname + '/views/'
