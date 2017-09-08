@@ -15,13 +15,19 @@ app.use(
 
 app.use(express.static('public'));
 
-app.get('/cookies', function (req, res) {
+app.get('/googled24e63e7a97d5253.html', (req, res) => {
+  res.sendFile('googled24e63e7a97d5253.html', {
+    root: __dirname + '/views/'
+  })
+});
+
+app.get('/cookies', (req, res) => {
   res.render('cookies', {
     root: __dirname + '/views/'
   });
 });
 
-app.get('/', function (req, res) {
+app.get('/', (req, res) => {
   res.render('home', {
     root: __dirname + '/views/'
   });
