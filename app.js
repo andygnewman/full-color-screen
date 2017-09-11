@@ -1,11 +1,16 @@
 const express = require('express');
 const app = express();
+const exphbs  = require('express-handlebars');
 const sassMiddleware = require('node-sass-middleware');
 const port = process.env.PORT || 3000;
 const colorSearch = require('./src/color-search');
 
 
-app.set('view engine', 'ejs');
+app.engine('html', exphbs({
+  defaultLayout: 'main',
+  extname: '.html'
+}));
+app.set('view engine', 'html');
 
 app.use(
    sassMiddleware({
@@ -18,22 +23,21 @@ app.use(
 app.use(express.static('public'));
 
 app.get('/googled24e63e7a97d5253.html', (req, res) => {
-  res.sendFile('googled24e63e7a97d5253.html', {
-    root: __dirname + '/views/'
-  })
+  res.render('googled24e63e7a97d5253');
 });
 
 app.get('/cookies', (req, res) => {
-  res.render('cookies', {
-    root: __dirname + '/views/'
-  });
+  res.render('cookies');
 });
 
 app.get('/search/:searchText/:searchSite?', (req, res) => {
   const searchText = req.params.searchText;
   const searchSite = req.params.searchSite;
   return colorSearch(searchText, searchSite)
-  .then(response => res.json(response));
+  .then(colors => res.render('color-search', {
+    colors,
+    layout: false
+  }));
 });
 
 app.get('/', (req, res) => {
