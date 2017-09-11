@@ -76,7 +76,7 @@ const getRGBValues = (resultSet) => {
 };
 
 const returnResponse = (response) => {
-  return { body: response };
+  return response;
 };
 
 module.exports = (searchText, searchSite) => {

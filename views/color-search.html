@@ -1,0 +1,17 @@
+<h2>Colour Search Results</h2>
+<table>
+  <tr>
+    <th>Range</th>
+    <th>Colour</th>
+    <th>Mini Sample</th>
+    <th></th>
+  </tr>
+  {{#colors}}
+    <tr>
+      <td>{{range}}</td>
+      <td>{{description}}</td>
+      <td style="background-color:rgb({{rgb}})"></td>
+      <td><button>Full Screen</button></td>
+    </tr>
+  {{/colors}}
+</table>
