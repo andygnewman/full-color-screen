@@ -14,10 +14,13 @@
     "node": "6.11.2"
   },
   "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
     "ejs": "^2.5.7",
     "express": "^4.15.3",
+    "node-fetch": "^1.7.3",
     "node-sass": "^4.5.3",
     "node-sass-middleware": "^0.11.0",
+    "request": "^2.81.0",
     "superstore": "^2.1.0",
     "webpack": "^3.5.6"
   }

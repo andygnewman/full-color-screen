@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const sassMiddleware = require('node-sass-middleware');
 const port = process.env.PORT || 3000;
+const colorSearch = require('./src/color-search');
+
 
 app.set('view engine', 'ejs');
 
@@ -25,6 +27,13 @@ app.get('/cookies', (req, res) => {
   res.render('cookies', {
     root: __dirname + '/views/'
   });
+});
+
+app.get('/search/:searchText/:searchSite?', (req, res) => {
+  const searchText = req.params.searchText;
+  const searchSite = req.params.searchSite;
+  return colorSearch(searchText, searchSite)
+  .then(response => res.json(response));
 });
 
 app.get('/', (req, res) => {
