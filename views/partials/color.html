@@ -1,18 +1,19 @@
 <div class="color">
-  <h2>Find the HEX code for your paint</h2>
+  <h2>Use your screen as a paint sample</h2>
   <fieldset class="fieldset__color-search">
+    <h3>Search for your paint</h3>
     <label class="label">Enter the name of your paint</label>
     <div>
       <textarea
       class="input__color-search"
       autocapitalize="characters"
       autocomplete="on"
-      cols="25"
+      cols="35"
       minlength="5"
-      placeholder="e.g. Inchyra Blue"
+      placeholder="e.g. Inchyra Blue (at least 5 characters)"
       rows="1"
       ></textarea>
-      <button class="button__color-search">Colour Search</button>
+      <button class="button__color-search"h>Colour Search</button>
     </div>
     <div>
       <p>Preferred Search Site</p>
@@ -21,14 +22,12 @@
         <label for="colorSearchLink1">
           <a class="link__color-search" href="https://www.e-paint.co.uk/" target="__blank">e-paint.co.uk</a>
         </label>
-        <p>Click "View L*a*b*/HLC values" link against colour result to get the HEX code</p>
       </div>
       <div>
         <input type="radio" id="colorSearchLink2" name="colorSearchLink" value="https://encycolorpedia.com/search?q=">
         <label for="colorSearchLink2">
           <a class="link__color-search" href="https://encycolorpedia.com/search?q=" target="__blank">encycolorpedia.com</a>
         </label>
-        <p>Click the link for colour result, the HEX code will be in the page title</p>
       </div>
       <p class="color-search__placeholder">Search results will appear here</p>
     </div>
