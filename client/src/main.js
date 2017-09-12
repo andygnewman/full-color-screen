@@ -21,8 +21,7 @@ const acceptCookieNotice = () => {
 }
 
 const initiateOverlay = (evt) => {
-  console.log('Event: ', evt.srcElement.dataSet.rgb);
-  const rgbValue = evt.srcElement.dataSet.rgb;
+  const rgbValue = evt.srcElement.dataset.rgb;
   overlay.style.backgroundColor = `rgb(${rgbValue})`;
   overlay.style.display = 'block';
 };
