@@ -70,7 +70,6 @@ const getRGBValues = (resultSet) => {
   return Promise.all(promises)
     .then(colourPages => {
       const rgbValues = extractRGBValues(colourPages);
-      console.log('rgbValues: ', rgbValues);
       resultSet.forEach((result, index) => result.rgb = rgbValues[index]);
       return resultSet;
     });
