@@ -32,7 +32,7 @@ app.get('/cookies', (req, res) => {
 
 app.get('/search/:searchText/:searchSite?', (req, res) => {
   const searchText = req.params.searchText;
-  const searchSite = req.params.searchSite;
+  const searchSite = decodeURIComponent(req.params.searchSite);
   return colorSearch(searchText, searchSite)
   .then(colors => res.render('color-search', {
     colors,

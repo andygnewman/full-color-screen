@@ -12,8 +12,9 @@ const overlay = document.querySelector('.overlay');
 const cookieNotice = document.querySelector('.cookie-notice');
 const errorPlaceholder = document.querySelector('.error');
 const colorSearchPlaceholder = document.querySelector('.color-search__placeholder');
+const colorSearchResults = document.querySelector('.color-search__results');
 const colorSearchIframe = document.querySelector('.color-search__iframe');
-const hexRegex = /^#[0-9A-F]{6}$/i;
+const HEX_REGEX = /^#[0-9A-F]{6}$/i;
 
 const checkCookieAcceptance = () => {
   return localStore.get('cookieAcceptance')
@@ -30,7 +31,7 @@ const resetHexCodeError = () => {
 };
 
 const checkHexCodeForError = (inputHexCodeValue) => {
-  if (!hexRegex.test(inputHexCodeValue)) {
+  if (!HEX_REGEX.test(inputHexCodeValue)) {
     const errorMessage = 'HEX code needs to be # followed by 6 characters, 0 to 9, or A to F';
     errorPlaceholder.textContent = errorMessage;
     return false;
@@ -52,11 +53,15 @@ const closeOverlay = () => {
 };
 
 const initiateColorSearch = () => {
-  const searchValue = inputColorSearch.value.split(' ').join('+');
-  const searchLink = document.querySelector('input[name=colorSearchLink]:checked').value + searchValue;
-  colorSearchIframe.src = searchLink;
-  colorSearchPlaceholder.style.display = 'none';
-  colorSearchIframe.style.display = 'block';
+  const searchText = inputColorSearch.value.split(' ').join('+');
+  const searchSite = encodeURIComponent(document.querySelector('input[name=colorSearchLink]:checked').value);
+  return fetch(`/search/${searchText}/${searchSite}`)
+    .then(response => response.text())
+    .then(colorResult => {
+      console.log('colorResult: ', colorResult);
+      colorSearchResults.innerHTML = colorResult;
+      colorSearchPlaceholder.style.display = 'none';
+    });
 };
 
 document.onkeydown = (evt) => {

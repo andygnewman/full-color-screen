@@ -11,6 +11,7 @@ const MAX_RESULTS = 5;
 const constructUrl = (searchText, searchSite = SEARCH_SITE_HOST) => {
   const queryParam = searchSite === SEARCH_SITE_HOST ? 'cQuery' : 'q';
   const url = `${searchSite}${SEARCH_SITE_ROUTE}?${queryParam}=${searchText}`;
+  console.log('url: ', url);
   return url;
 };
 
@@ -70,6 +71,7 @@ const getRGBValues = (resultSet) => {
   return Promise.all(promises)
     .then(colourPages => {
       const rgbValues = extractRGBValues(colourPages);
+      console.log('rgbValues: ', rgbValues);
       resultSet.forEach((result, index) => result.rgb = rgbValues[index]);
       return resultSet;
     });
