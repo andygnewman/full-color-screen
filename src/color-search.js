@@ -5,7 +5,7 @@ const SEARCH_SITE_ROUTE = 'search_colour.asp';
 const NEWLINE_REGEX = /\n|\r/g;
 const TRAILING_SPACE_REGEX = /\s+$/;
 const RANGE_REGEX = /(?:^\s*Colour Range: )(.*?)(?=Colour reference)/;
-const DESCRIPTION_REGEX = /(?:Description:       )(.*?)(?=View)/;
+const NAME_REGEX = /(?:Description:       )(.*?)(?=View)/;
 const MAX_RESULTS = 5;
 
 const constructUrl = (searchText, searchSite = SEARCH_SITE_HOST) => {
@@ -34,7 +34,7 @@ const extractLinkToValues = (responseText) => {
     const text = $(el).text().replace(NEWLINE_REGEX, '');
     const resultObject = {
       range: RANGE_REGEX.exec(text)[1].replace(TRAILING_SPACE_REGEX, ''),
-      description: DESCRIPTION_REGEX.exec(text)[1].replace(TRAILING_SPACE_REGEX, ''),
+      name: NAME_REGEX.exec(text)[1].replace(TRAILING_SPACE_REGEX, ''),
       link: SEARCH_SITE_HOST + $(el).children('a').last().attr('href')
     };
     resultSet.push(resultObject);
