@@ -1,17 +1,2 @@
 <h3>Colour Search Results</h3>
-<table>
-  <tr>
-    <th>Range</th>
-    <th>Colour</th>
-    <th>Mini Sample</th>
-    <th></th>
-  </tr>
-  {{#colors}}
-    <tr>
-      <td>{{range}}</td>
-      <td>{{description}}</td>
-      <td style="background-color:rgb({{rgb}})"></td>
-      <td><button class="button__initiate--overlay" data-rgb="{{rgb}}">Full Screen</button></td>
-    </tr>
-  {{/colors}}
-</table>
+{{> color-template}}

@@ -1,15 +1,16 @@
 const express = require('express');
-const app = express();
 const exphbs  = require('express-handlebars');
+const app = express();
 const sassMiddleware = require('node-sass-middleware');
 const port = process.env.PORT || 3000;
 const colorSearch = require('./src/color-search');
 
-
-app.engine('html', exphbs({
+const hbs = exphbs.create({
   defaultLayout: 'main',
   extname: '.html'
-}));
+});
+
+app.engine('html', hbs.engine);
 app.set('view engine', 'html');
 
 app.use(

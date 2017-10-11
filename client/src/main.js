@@ -1,3 +1,6 @@
+// const Handlebars = require('handlebars/runtime');
+// const colorTemplate = Handlebars.templates['color-template'];
+
 const Superstore = require('superstore');
 const localStore = new Superstore('local', 'fullScreenPaintSample');
 
@@ -9,6 +12,7 @@ const overlay = document.querySelector('.overlay');
 const cookieNotice = document.querySelector('.cookie-notice');
 const colorSearchPlaceholder = document.querySelector('.color-search__placeholder');
 const colorSearchResults = document.querySelector('.color-search__results');
+const colorPrevious = document.querySelector('.color-search__previous');
 
 const checkCookieAcceptance = () => {
   return localStore.get('cookieAcceptance')
@@ -20,10 +24,35 @@ const acceptCookieNotice = () => {
     .then(() => cookieNotice.style.display = 'none');
 }
 
+const saveColor = (colorObject) => {
+  return localStore.get('savedColors')
+    .then(savedColors => {
+      if (savedColors) {
+        savedColors.unshift(colorObject);
+      } else {
+        const storeArray = [];
+        storeArray.push(colorObject);
+        savedColors = storeArray;
+      }
+      localStore.set('savedColors', savedColors);
+      // return displayStoredColor();
+      return;
+    });
+};
+
+// const displayStoredColor = () => {
+//   return localStore.get('savedColors')
+//     .then(savedColors => colorPrevious.innerHTML = colorTemplate(savedColors));
+// };
+
 const initiateOverlay = (evt) => {
-  const rgbValue = evt.srcElement.dataset.rgb;
-  overlay.style.backgroundColor = `rgb(${rgbValue})`;
-  overlay.style.display = 'block';
+  const dataSetJSON = Object.assign({}, evt.srcElement.dataset);
+  const {rgb} = dataSetJSON;
+  return saveColor(dataSetJSON)
+  .then(() => {
+    overlay.style.backgroundColor = `rgb(${rgb})`;
+    overlay.style.display = 'block';
+  });
 };
 
 const closeOverlay = () => {
@@ -43,6 +72,8 @@ const colorSearch = () => {
     });
 };
 
+// displayStoredColor();
+
 document.onkeydown = (evt) => {
   evt = evt || window.event;
   if (evt.keyCode === 27) {
@@ -59,4 +90,4 @@ checkCookieAcceptance()
     if (!cookieAcceptance) {
       cookieNotice.style.display = 'block';
     }
-  })
+  });
