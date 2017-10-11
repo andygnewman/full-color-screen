@@ -41,7 +41,7 @@ app.get('/search/:searchText/:searchSite?', (req, res) => {
   }));
 });
 
-app.get('/', exposeTemplates, (req, res) => {
+app.get('/', (req, res) => {
   res.render('home', {
     root: __dirname + '/views/'
   });
