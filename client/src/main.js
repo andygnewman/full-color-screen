@@ -1,5 +1,7 @@
 // const Handlebars = require('handlebars/runtime');
-// const colorTemplate = Handlebars.templates['color-template'];
+// const colorTemplate = Handlebars.getTemplate('color-template');
+
+const colorTemplate = require('../../views/shared/color-template.html');
 
 const Superstore = require('superstore');
 const localStore = new Superstore('local', 'fullScreenPaintSample');
@@ -24,10 +26,19 @@ const acceptCookieNotice = () => {
     .then(() => cookieNotice.style.display = 'none');
 }
 
+const attachOverlayAction = () => {
+  const initiateOverlayButtons = document.querySelectorAll('.button__initiate--overlay');
+  initiateOverlayButtons.forEach(button => button.onclick = initiateOverlay);
+}
+
 const saveColor = (colorObject) => {
   return localStore.get('savedColors')
     .then(savedColors => {
       if (savedColors) {
+        const existingColorIndex = savedColors.findIndex(color => color.rgb === colorObject.rgb);
+        if (existingColorIndex > -1) {
+          savedColors.splice(existingColorIndex, 1);
+        }
         savedColors.unshift(colorObject);
       } else {
         const storeArray = [];
@@ -35,15 +46,21 @@ const saveColor = (colorObject) => {
         savedColors = storeArray;
       }
       localStore.set('savedColors', savedColors);
-      // return displayStoredColor();
-      return;
+      return displayStoredColor();
     });
 };
 
-// const displayStoredColor = () => {
-//   return localStore.get('savedColors')
-//     .then(savedColors => colorPrevious.innerHTML = colorTemplate(savedColors));
-// };
+const displayStoredColor = () => {
+  return localStore.get('savedColors')
+    .then(savedColors => {
+      let savedColorHTML = '<p>No previously viewed colours</p>';
+      if (savedColors) {
+        savedColorHTML = colorTemplate({colors: savedColors});
+      }
+      colorPrevious.innerHTML = savedColorHTML;
+      attachOverlayAction();
+    });
+};
 
 const initiateOverlay = (evt) => {
   const dataSetJSON = Object.assign({}, evt.srcElement.dataset);
@@ -66,13 +83,12 @@ const colorSearch = () => {
     .then(response => response.text())
     .then(colorResult => {
       colorSearchResults.innerHTML = colorResult;
-      const initiateOverlayButtons = document.querySelectorAll('.button__initiate--overlay');
-      initiateOverlayButtons.forEach(button => button.onclick = initiateOverlay);
+      attachOverlayAction();
       colorSearchPlaceholder.style.display = 'none';
     });
 };
 
-// displayStoredColor();
+displayStoredColor();
 
 document.onkeydown = (evt) => {
   evt = evt || window.event;
