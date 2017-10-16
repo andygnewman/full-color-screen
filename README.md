@@ -1,4 +1,4 @@
-#Full Screen Paint Sample
+# Full Screen Paint Sample
 
 Use your screen as a paint sample.
 
@@ -6,4 +6,4 @@ Text search for your paint colour and then display as full screen, responsive ac
 
 Saves previously viewed colours.
 
-https://fullscreenpaintsample.com
+http://fullscreenpaintsample.com
