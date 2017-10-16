@@ -43,7 +43,13 @@ const saveColor = (colorObject) => {
 
 const displayStoredColor = () => {
   return localStore.get('savedColors')
-    .then(savedColors => colorPrevious.innerHTML = colorTemplate({colors: savedColors}));
+    .then(savedColors => {
+      let savedColorHTML = '<p>No previously viewed colours</p>';
+      if (savedColors) {
+        savedColorHTML = colorTemplate({colors: savedColors});
+      }
+      colorPrevious.innerHTML = savedColorHTML;
+    });
 };
 
 const initiateOverlay = (evt) => {
