@@ -7,7 +7,11 @@ const colorSearch = require('./src/color-search');
 
 const hbs = exphbs.create({
   defaultLayout: 'main',
-  extname: '.html'
+  extname: '.html',
+  partialsDir: [
+    'views/shared/',
+    'views/partials/'
+  ]
 });
 
 app.engine('html', hbs.engine);

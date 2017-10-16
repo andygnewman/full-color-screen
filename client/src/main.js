@@ -1,5 +1,7 @@
 // const Handlebars = require('handlebars/runtime');
-// const colorTemplate = Handlebars.templates['color-template'];
+// const colorTemplate = Handlebars.getTemplate('color-template');
+
+const colorTemplate = require('../../views/shared/color-template.html');
 
 const Superstore = require('superstore');
 const localStore = new Superstore('local', 'fullScreenPaintSample');
@@ -35,15 +37,14 @@ const saveColor = (colorObject) => {
         savedColors = storeArray;
       }
       localStore.set('savedColors', savedColors);
-      // return displayStoredColor();
-      return;
+      return displayStoredColor();
     });
 };
 
-// const displayStoredColor = () => {
-//   return localStore.get('savedColors')
-//     .then(savedColors => colorPrevious.innerHTML = colorTemplate(savedColors));
-// };
+const displayStoredColor = () => {
+  return localStore.get('savedColors')
+    .then(savedColors => colorPrevious.innerHTML = colorTemplate({colors: savedColors}));
+};
 
 const initiateOverlay = (evt) => {
   const dataSetJSON = Object.assign({}, evt.srcElement.dataset);
@@ -72,7 +73,7 @@ const colorSearch = () => {
     });
 };
 
-// displayStoredColor();
+displayStoredColor();
 
 document.onkeydown = (evt) => {
   evt = evt || window.event;
