@@ -26,10 +26,19 @@ const acceptCookieNotice = () => {
     .then(() => cookieNotice.style.display = 'none');
 }
 
+const attachOverlayAction = () => {
+  const initiateOverlayButtons = document.querySelectorAll('.button__initiate--overlay');
+  initiateOverlayButtons.forEach(button => button.onclick = initiateOverlay);
+}
+
 const saveColor = (colorObject) => {
   return localStore.get('savedColors')
     .then(savedColors => {
       if (savedColors) {
+        const existingColorIndex = savedColors.findIndex(color => color.rgb === colorObject.rgb);
+        if (existingColorIndex > -1) {
+          savedColors.splice(existingColorIndex, 1);
+        }
         savedColors.unshift(colorObject);
       } else {
         const storeArray = [];
@@ -49,6 +58,7 @@ const displayStoredColor = () => {
         savedColorHTML = colorTemplate({colors: savedColors});
       }
       colorPrevious.innerHTML = savedColorHTML;
+      attachOverlayAction();
     });
 };
 
@@ -73,8 +83,7 @@ const colorSearch = () => {
     .then(response => response.text())
     .then(colorResult => {
       colorSearchResults.innerHTML = colorResult;
-      const initiateOverlayButtons = document.querySelectorAll('.button__initiate--overlay');
-      initiateOverlayButtons.forEach(button => button.onclick = initiateOverlay);
+      attachOverlayAction();
       colorSearchPlaceholder.style.display = 'none';
     });
 };
