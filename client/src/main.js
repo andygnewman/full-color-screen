@@ -61,6 +61,7 @@ const displayStoredColor = () => {
 };
 
 const applyOverlayStyle = (rgb, opacity = 1) => {
+  document.body.style.overflow = 'hidden';
   overlay.style.backgroundColor = `rgb(${rgb})`;
   overlay.style.display = 'block';
   overlay.style.opacity = opacity;
@@ -77,6 +78,8 @@ const initiateOverlay = (evt) => {
 
 const closeOverlay = () => {
   overlay.style.display = 'none';
+  waitText.style.display = 'none';
+  document.body.style.overflow = 'auto';
 };
 
 const colorSearch = () => {
@@ -90,7 +93,6 @@ const colorSearch = () => {
       colorSearchResults.innerHTML = colorResult;
       attachOverlayAction();
       colorSearchPlaceholder.style.display = 'none';
-      waitText.style.display = 'none';
       closeOverlay();
     });
 };
