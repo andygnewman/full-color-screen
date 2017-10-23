@@ -53,7 +53,7 @@ const displayStoredColor = () => {
     .then(savedColors => {
       let savedColorHTML = '<p>No previously viewed colours</p>';
       if (savedColors) {
-        savedColorHTML = colorTemplate({colors: savedColors});
+        savedColorHTML = colorTemplate({resultObject: {resultSet: savedColors}});
       }
       colorPrevious.innerHTML = savedColorHTML;
       attachOverlayAction();

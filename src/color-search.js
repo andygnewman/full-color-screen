@@ -40,7 +40,7 @@ const extractLinkToValues = (responseText) => {
     resultSet.push(resultObject);
     if (i === (MAX_RESULTS -1)) return false;
   });
-  return resultSet;
+  return {resultSet, resultMaxNumber: results.length > 5};
 };
 
 const extractRGBValues = (colourPages) => {
@@ -61,7 +61,8 @@ const extractRGBValues = (colourPages) => {
   return rgbValues;
 };
 
-const getRGBValues = (resultSet) => {
+const getRGBValues = (resultObject) => {
+  const {resultSet, resultMaxNumber} = resultObject;
   const promises = [];
   const links = resultSet.map(result => result.link);
   links.forEach(link => {
@@ -71,18 +72,18 @@ const getRGBValues = (resultSet) => {
     .then(colourPages => {
       const rgbValues = extractRGBValues(colourPages);
       resultSet.forEach((result, index) => result.rgb = rgbValues[index]);
-      return resultSet;
+      return {resultSet, resultMaxNumber};
     });
 };
 
-const returnResponse = (response) => {
-  return response;
+const returnResponse = (resultObject) => {
+  return resultObject;
 };
 
 module.exports = (searchText, searchSite) => {
   const url = constructUrl(searchText, searchSite);
   return fetchSearch(url)
     .then(response => extractLinkToValues(response))
-    .then(resultSet => getRGBValues(resultSet))
-    .then(resultSet => returnResponse(resultSet));
+    .then(resultObject => getRGBValues(resultObject))
+    .then(resultObject => resultObject);
 };
