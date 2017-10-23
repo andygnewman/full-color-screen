@@ -29,6 +29,11 @@ const attachOverlayAction = () => {
   initiateOverlayButtons.forEach(button => button.onclick = initiateOverlay);
 }
 
+const attachDeleteAction = () => {
+  const deleteColorButtons = document.querySelectorAll('.button__delete-color');
+  deleteColorButtons.forEach(button => button.onclick = deleteColor);
+}
+
 const saveColor = (colorObject) => {
   return localStore.get('savedColors')
     .then(savedColors => {
@@ -53,10 +58,11 @@ const displayStoredColor = () => {
     .then(savedColors => {
       let savedColorHTML = '<p>No previously viewed colours</p>';
       if (savedColors) {
-        savedColorHTML = colorTemplate({resultObject: {resultSet: savedColors}});
+        savedColorHTML = colorTemplate({resultObject: {resultSet: savedColors, allowDelete: true}});
       }
       colorPrevious.innerHTML = savedColorHTML;
       attachOverlayAction();
+      attachDeleteAction();
     });
 };
 
@@ -74,6 +80,19 @@ const initiateOverlay = (evt) => {
   .then(() => {
     applyOverlayStyle(rgb);
   });
+};
+
+const deleteColor = (evt) => {
+  const dataSetJSON = Object.assign({}, evt.srcElement.dataset);
+  const {index} = dataSetJSON;
+  return localStore.get('savedColors')
+    .then(savedColors => {
+      if (savedColors) {
+        savedColors.splice(index, 1);
+        localStore.set('savedColors', savedColors);
+      }
+      return displayStoredColor();
+    });
 };
 
 const closeOverlay = () => {

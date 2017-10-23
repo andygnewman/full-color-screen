@@ -22,11 +22,21 @@
               Full Screen
             </button>
           </td>
+          {{#if ../allowDelete}}
+          <td>
+            <button
+              class="button__delete-color"
+              data-index="{{@index}}"
+            >
+              Delete
+            </button>
+          </td>
+          {{/if}}
         </tr>
       {{/resultSet}}
     </table>
   {{else}}
-    <p>No colours found matching your search term</p>
+    <p>No colour results</p>
   {{/if}}
   {{#if resultMaxNumber}}
     <p>More than {{resultMaxNumber}} colours found matching your search term. Please narrow down your search.<p>
