@@ -40,7 +40,8 @@ const extractLinkToValues = (responseText) => {
     resultSet.push(resultObject);
     if (i === (MAX_RESULTS -1)) return false;
   });
-  return {resultSet, resultMaxNumber: results.length > 5};
+  const resultMaxNumber = results.length > MAX_RESULTS ? MAX_RESULTS : false;
+  return {resultSet, resultMaxNumber};
 };
 
 const extractRGBValues = (colourPages) => {
