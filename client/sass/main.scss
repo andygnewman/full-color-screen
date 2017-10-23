@@ -38,6 +38,10 @@ button {
   grid-column: 2;
   grid-row: 1;
 
+  ul {
+    padding-left: 1em;
+  }
+
   li {
     font-size: 0.9em;
     line-height: 1em;
