@@ -1,29 +1,34 @@
-{{#if colors}}
-  <table>
-    <tr>
-      <th>Range</th>
-      <th>Name</th>
-      <th>Mini Sample</th>
-      <th></th>
-    </tr>
-    {{#colors}}
+{{#with resultObject}}
+  {{#if resultSet}}
+    <table>
       <tr>
-        <td>{{range}}</td>
-        <td>{{name}}</td>
-        <td style="background-color:rgb({{rgb}})"></td>
-        <td>
-          <button
-            class="button__initiate--overlay"
-            data-rgb="{{rgb}}"
-            data-range="{{range}}"
-            data-name="{{name}}"
-          >
-            Full Screen
-          </button>
-        </td>
+        <th>Range</th>
+        <th>Name</th>
+        <th>Mini Sample</th>
+        <th></th>
       </tr>
-    {{/colors}}
-  </table>
-{{else}}
-  <p>No colours found matching your search term</p>
-{{/if}}
+      {{#resultSet}}
+        <tr>
+          <td>{{range}}</td>
+          <td>{{name}}</td>
+          <td style="background-color:rgb({{rgb}})"></td>
+          <td>
+            <button
+              class="button__initiate--overlay"
+              data-rgb="{{rgb}}"
+              data-range="{{range}}"
+              data-name="{{name}}"
+            >
+              Full Screen
+            </button>
+          </td>
+        </tr>
+      {{/resultSet}}
+    </table>
+  {{else}}
+    <p>No colours found matching your search term</p>
+  {{/if}}
+  {{#if resultMaxNumber}}
+    <p>More than {{resultMaxNumber}} colours found matching your search term. Please narrow down your search.<p>
+  {{/if}}
+{{/with}}

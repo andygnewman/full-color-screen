@@ -39,16 +39,14 @@ app.get('/search/:searchText/:searchSite?', (req, res) => {
   const searchText = req.params.searchText;
   const searchSite = decodeURIComponent(req.params.searchSite);
   return colorSearch(searchText, searchSite)
-  .then(colors => res.render('color-search', {
-    colors,
+  .then(resultObject => res.render('color-search', {
+    resultObject,
     layout: false
   }));
 });
 
 app.get('/', (req, res) => {
-  res.render('home', {
-    root: __dirname + '/views/'
-  });
+  res.render('home');
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
