@@ -6,7 +6,6 @@ const NEWLINE_REGEX = /\n|\r/g;
 const TRAILING_SPACE_REGEX = /\s+$/;
 const RANGE_REGEX = /(?:^\s*Colour Range: )(.*?)(?=Colour reference)/;
 const NAME_REGEX = /(?:Description:       )(.*?)(?=View)/;
-const MAX_RESULTS = 5;
 
 const constructUrl = (searchText, searchHost) => {
   const queryParam = 'cQuery';
@@ -29,7 +28,7 @@ const extractLinkToValues = (responseText, maxResults, searchHost) => {
   const $ = cheerio.load(responseText, {
     ignoreWhitespace: true
   });
-  const results = $('.information');
+  const results = $('information');
   results.each((i, el) => {
     const text = $(el).text().replace(NEWLINE_REGEX, '');
     const resultObject = {
