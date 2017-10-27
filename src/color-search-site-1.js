@@ -1,14 +1,14 @@
 const fetch = require('node-fetch');
 const cheerio = require('cheerio');
-const SEARCH_SITE_ROUTE = 'search_colour.asp';
-const SEARCH_SITE_QUERY_PARAM = 'cQuery';
-const NEWLINE_REGEX = /\n|\r/g;
-const TRAILING_SPACE_REGEX = /\s+$/;
-const RANGE_REGEX = /(?:^\s*Colour Range: )(.*?)(?=Colour reference)/;
-const NAME_REGEX = /(?:Description:       )(.*?)(?=View)/;
+const SEARCH_SITE_ROUTE = 'search';
+const SEARCH_SITE_QUERY_PARAM = 'q';
+const HEX_REGEX = /#[a-z0-9]{6}\s\/\s/;
+const RGB_REGEX = /(?:rgb\()(.*?)(?=\))/;
+const APOSTROPHE_REGEX = /(\'[a-z]+)(?=\+)/g;
 
 const constructUrl = (searchText, searchHost) => {
-  const normalizedSearchText = searchText.split('\'').sort((a, b) => b.length - a.length).pop();
+  const apostropheText = APOSTROPHE_REGEX.exec(searchText);
+  const normalizedSearchText = apostropheText ? searchText.replace(apostropheText.pop(), '') : searchText;
   const queryParam = 'cQuery';
   const url = `${searchHost}${SEARCH_SITE_ROUTE}?${SEARCH_SITE_QUERY_PARAM}=${normalizedSearchText}`;
   return url;
@@ -16,7 +16,7 @@ const constructUrl = (searchText, searchHost) => {
 
 const fetchSearch = (url) => {
   const options = {
-    method: 'POST'
+    method: 'GET'
   };
   return fetch(url, options)
     .then(response => {
@@ -24,58 +24,30 @@ const fetchSearch = (url) => {
     });
 };
 
-const extractLinkToValues = (responseText, maxResults, searchHost) => {
+const extractResults = (responseText, maxResults, searchText) => {
   const resultSet = [];
   const $ = cheerio.load(responseText, {
     ignoreWhitespace: true
   });
-  const results = $('.information');
+  const results = $('#search').children().first().children();
   results.each((i, el) => {
-    const text = $(el).text().replace(NEWLINE_REGEX, '');
-    const range = RANGE_REGEX.exec(text)[1].replace(TRAILING_SPACE_REGEX, '');
-    const name = NAME_REGEX.exec(text)[1].replace(TRAILING_SPACE_REGEX, '');
+    const nameText = $(el).children('ul').first().children('li').eq(1).children('h2').text();
+    const nameTextArray = nameText.replace(HEX_REGEX, '').split(',');
+    const resultName = nameTextArray.find(name => {
+      const standardizeName = name.toLowerCase().replace(/\\/g, '').replace(/\s/g, '+');
+      return standardizeName.includes(searchText);
+    });
+    const rgbText = $(el).children('ul').first().children('li').eq(1).children('p').eq(1).text();
+    const resultRgb = RGB_REGEX.exec(rgbText)[1].split(',');
     const resultObject = {
-      name: `${range} ${name}`,
-      link: searchHost + $(el).children('a').last().attr('href')
+      name: resultName,
+      rgb: resultRgb
     };
     resultSet.push(resultObject);
     if (i === (maxResults -1)) return false;
   });
   const resultMaxNumber = results.length > maxResults ? maxResults : false;
   return {resultSet, resultMaxNumber};
-};
-
-const extractRGBValues = (colourPages) => {
-  const rgbValues = [];
-  colourPages.forEach(page => {
-    const $ = cheerio.load(page, {
-      ignoreWhitespace: true
-    });
-    const rgbValue = $('.lab-result').children('span').eq(2)
-      .children('div').eq(2)
-      .children('p').eq(1)
-      .text()
-      .replace(/\s/g, '')
-      .replace(/sRGB\:/, '')
-      .split(';');
-    rgbValues.push(rgbValue);
-  });
-  return rgbValues;
-};
-
-const getRGBValues = (resultObject) => {
-  const {resultSet, resultMaxNumber} = resultObject;
-  const promises = [];
-  const links = resultSet.map(result => result.link);
-  links.forEach(link => {
-    promises.push(fetchSearch(link));
-  });
-  return Promise.all(promises)
-    .then(colourPages => {
-      const rgbValues = extractRGBValues(colourPages);
-      resultSet.forEach((result, index) => result.rgb = rgbValues[index]);
-      return {resultSet, resultMaxNumber};
-    });
 };
 
 const returnResponse = (resultObject) => {
@@ -85,7 +57,6 @@ const returnResponse = (resultObject) => {
 module.exports = (searchText, searchHost, maxResults) => {
   const url = constructUrl(searchText, searchHost);
   return fetchSearch(url)
-    .then(responseText => extractLinkToValues(responseText, maxResults, searchHost))
-    .then(resultObject => getRGBValues(resultObject))
+    .then(responseText => extractResults(responseText, maxResults, searchText))
     .then(resultObject => returnResponse(resultObject))
 };
