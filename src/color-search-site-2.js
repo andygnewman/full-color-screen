@@ -4,10 +4,13 @@ const SEARCH_SITE_ROUTE = 'search';
 const SEARCH_SITE_QUERY_PARAM = 'q';
 const HEX_REGEX = /#[a-z0-9]{6}\s\/\s/;
 const RGB_REGEX = /(?:rgb\()(.*?)(?=\))/;
+const APOSTROPHE_REGEX = /(\'[a-z]+)(?=\+)/g;
 
 const constructUrl = (searchText, searchHost) => {
+  const apostropheText = APOSTROPHE_REGEX.exec(searchText);
+  const normalizedSearchText = apostropheText ? searchText.replace(apostropheText.pop(), '') : searchText;
   const queryParam = 'cQuery';
-  const url = `${searchHost}${SEARCH_SITE_ROUTE}?${SEARCH_SITE_QUERY_PARAM}=${searchText}`;
+  const url = `${searchHost}${SEARCH_SITE_ROUTE}?${SEARCH_SITE_QUERY_PARAM}=${normalizedSearchText}`;
   return url;
 };
 
@@ -30,7 +33,10 @@ const extractResults = (responseText, maxResults, searchText) => {
   results.each((i, el) => {
     const nameText = $(el).children('ul').first().children('li').eq(1).children('h2').text();
     const nameTextArray = nameText.replace(HEX_REGEX, '').split(',');
-    const resultName = nameTextArray.find(name => name.toLowerCase().includes(searchText.replace('+', ' ')));
+    const resultName = nameTextArray.find(name => {
+      const standardizeName = name.toLowerCase().replace(/\\/g, '').replace(/\s/g, '+');
+      return standardizeName.includes(searchText);
+    });
     const rgbText = $(el).children('ul').first().children('li').eq(1).children('p').eq(1).text();
     const resultRgb = RGB_REGEX.exec(rgbText)[1].split(',');
     const resultObject = {
