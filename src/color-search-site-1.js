@@ -28,12 +28,13 @@ const extractLinkToValues = (responseText, maxResults, searchHost) => {
   const $ = cheerio.load(responseText, {
     ignoreWhitespace: true
   });
-  const results = $('information');
+  const results = $('.information');
   results.each((i, el) => {
     const text = $(el).text().replace(NEWLINE_REGEX, '');
+    const range = RANGE_REGEX.exec(text)[1].replace(TRAILING_SPACE_REGEX, '');
+    const name = NAME_REGEX.exec(text)[1].replace(TRAILING_SPACE_REGEX, '');
     const resultObject = {
-      range: RANGE_REGEX.exec(text)[1].replace(TRAILING_SPACE_REGEX, ''),
-      name: NAME_REGEX.exec(text)[1].replace(TRAILING_SPACE_REGEX, ''),
+      name: `${range} ${name}`,
       link: searchHost + $(el).children('a').last().attr('href')
     };
     resultSet.push(resultObject);
