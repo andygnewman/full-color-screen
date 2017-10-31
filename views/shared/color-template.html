@@ -33,13 +33,13 @@
       {{/resultSet}}
     </table>
   {{else}}
-    <p>No colour results</p>
+    <p>Sorry no colour matches found. Please try a different search term.</p>
   {{/if}}
   {{#if resultCloseMatch}}
-    <p>No exact matches were found, but these seemed close. Or try searching again.</p>
+    <p>No exact matches were found, but these seemed close. Or try a different search term.</p>
   {{else}}
     {{#if resultMaxNumber}}
-      <p>More than {{resultMaxNumber}} colours found matching your search term. Please narrow down your search.</p>
+      <p>More than {{resultMaxNumber}} colours matched your search term. Please narrow down your search.</p>
     {{/if}}
   {{/if}}
 {{/with}}

@@ -52,7 +52,7 @@ const extractResults = (responseText, maxResults, searchText) => {
     if (i === (maxResults -1)) return false;
   });
   const resultMaxNumber = results.length > maxResults ? maxResults : false;
-  const resultCloseMatch = resultSet.length === closeMatch.length;
+  const resultCloseMatch = resultSet.length > 0 && resultSet.length === closeMatch.length;
   return {resultSet, resultMaxNumber, resultCloseMatch};
 };
 
