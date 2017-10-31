@@ -9,7 +9,6 @@ const APOSTROPHE_REGEX = /(\'[a-z]+)(?=\+)/g;
 const constructUrl = (searchText, searchHost) => {
   const apostropheText = APOSTROPHE_REGEX.exec(searchText);
   const normalizedSearchText = apostropheText ? searchText.replace(apostropheText.pop(), '') : searchText;
-  const queryParam = 'cQuery';
   const url = `${searchHost}${SEARCH_SITE_ROUTE}?${SEARCH_SITE_QUERY_PARAM}=${normalizedSearchText}`;
   return url;
 };
@@ -26,17 +25,23 @@ const fetchSearch = (url) => {
 
 const extractResults = (responseText, maxResults, searchText) => {
   const resultSet = [];
+  const closeMatch = [];
   const $ = cheerio.load(responseText, {
     ignoreWhitespace: true
   });
   const results = $('#search').children().first().children();
   results.each((i, el) => {
+    let resultName = false;
     const nameText = $(el).children('ul').first().children('li').eq(1).children('h2').text();
     const nameTextArray = nameText.replace(HEX_REGEX, '').split(',');
-    const resultName = nameTextArray.find(name => {
+    resultName = nameTextArray.find(name => {
       const standardizeName = name.toLowerCase().replace(/\\/g, '').replace(/\s/g, '+');
       return standardizeName.includes(searchText);
     });
+    if (!resultName) {
+      closeMatch.push(true);
+      resultName = nameTextArray.shift();
+    }
     const rgbText = $(el).children('ul').first().children('li').eq(1).children('p').eq(1).text();
     const resultRgb = RGB_REGEX.exec(rgbText)[1].split(',');
     const resultObject = {
@@ -47,7 +52,8 @@ const extractResults = (responseText, maxResults, searchText) => {
     if (i === (maxResults -1)) return false;
   });
   const resultMaxNumber = results.length > maxResults ? maxResults : false;
-  return {resultSet, resultMaxNumber};
+  const resultCloseMatch = resultSet.length > 0 && resultSet.length === closeMatch.length;
+  return {resultSet, resultMaxNumber, resultCloseMatch};
 };
 
 const returnResponse = (resultObject) => {
