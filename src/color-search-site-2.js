@@ -9,7 +9,6 @@ const NAME_REGEX = /(?:Description:       )(.*?)(?=View)/;
 
 const constructUrl = (searchText, searchHost) => {
   const normalizedSearchText = searchText.split('\'').sort((a, b) => b.length - a.length).pop();
-  const queryParam = 'cQuery';
   const url = `${searchHost}${SEARCH_SITE_ROUTE}?${SEARCH_SITE_QUERY_PARAM}=${normalizedSearchText}`;
   return url;
 };

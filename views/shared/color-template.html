@@ -35,7 +35,11 @@
   {{else}}
     <p>No colour results</p>
   {{/if}}
-  {{#if resultMaxNumber}}
-    <p>More than {{resultMaxNumber}} colours found matching your search term. Please narrow down your search.<p>
+  {{#if resultCloseMatch}}
+    <p>No exact matches were found, but these seemed close. Or try searching again.</p>
+  {{else}}
+    {{#if resultMaxNumber}}
+      <p>More than {{resultMaxNumber}} colours found matching your search term. Please narrow down your search.</p>
+    {{/if}}
   {{/if}}
 {{/with}}
